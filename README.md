@@ -78,15 +78,14 @@ The following SQL queries were developed to answer specific business questions:
 
 2. **Write a SQL query to retrieve all transactions where the category is 'Clothing' and the quantity sold is more than 4 in the month of Nov-2022**:
 ```sql
-SELECT 
-  *
-FROM retail_sales
-WHERE 
-    category = 'Clothing'
-    AND 
-    TO_CHAR(sale_date, 'YYYY-MM') = '2022-11'
-    AND
-    quantity >= 4
+select 
+		   *
+	from retail_sales
+	where category='Clothing'
+	  and 
+	  sale_Date between '2022-11-01' and '2022-11-30'
+	  and 
+	  quantity >=4;
 ```
 
 3. **Write a SQL query to calculate the total sales (total_sale) for each category.**:
@@ -168,22 +167,23 @@ GROUP BY category
 
 10. **Write a SQL query to create each shift and number of orders (Example Morning <12, Afternoon Between 12 & 17, Evening >17)**:
 ```sql
-WITH hourly_sale
-AS
-(
-SELECT *,
-    CASE
-        WHEN EXTRACT(HOUR FROM sale_time) < 12 THEN 'Morning'
-        WHEN EXTRACT(HOUR FROM sale_time) BETWEEN 12 AND 17 THEN 'Afternoon'
-        ELSE 'Evening'
-    END as shift
-FROM retail_sales
-)
-SELECT 
-    shift,
-    COUNT(*) as total_orders    
-FROM hourly_sale
-GROUP BY shift
+ with hourly_sales
+   as
+   (
+      select *,
+	        case
+			     when extract(hour from sale_time) <=12 Then 'morning'
+				 when extract(hour from sale_time) between 12 and 17 Then 'Afternoon'
+				 else 'Evening'
+			end as shift		
+			   from retail_Sales
+   )
+   select 
+   		shift,
+   		count(*) as total_orders
+   from hourly_sales
+   group by shift
+   order by total_orders desc;
 ```
 
 ## Findings
@@ -203,4 +203,8 @@ GROUP BY shift
 
 This project serves as a comprehensive introduction to SQL for data analysts, covering database setup, data cleaning, exploratory data analysis, and business-driven SQL queries. The findings from this project can help drive business decisions by understanding sales patterns, customer behavior, and product performance.
 
+## Author - Dora Kanaparthi
 
+This project is part of my portfolio, showcasing the SQL skills essential for data analyst roles.
+
+                                  **Thank You**
