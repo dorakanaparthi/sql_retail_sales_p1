@@ -1,5 +1,5 @@
 -- SQL Reail Sales Analysis - p1
-create database sql_project_p1;
+create database p1_retail_db;
 
 -- create table
 create table retail_sales(
@@ -204,5 +204,6 @@ select category,count(*) from retail_sales  group by category;
 
 -- End of Project
       
+
 
  
